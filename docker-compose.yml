@@ -48,12 +48,13 @@ services:
     depends_on:
       - rapidpro
       - mailroom
+      - courier
   mailroom:
-    image: praekeltfoundation/mailroom
+    build:
+      context: .
+      dockerfile: docker/local/mailroom/Dockerfile
     depends_on:
-      - db
-      - redis
-      - elasticsearch
+      - rapidpro
     environment:
       - MAILROOM_ADDRESS=${MAILROOM_ADDRESS:-0.0.0.0}
       - MAILROOM_DB=postgres://temba:temba@db/temba?sslmode=disable
@@ -73,10 +74,11 @@ services:
       - MAILROOM_AWS_SECRET_ACCESS_KEY=${MAILROOM_AWS_SECRET_ACCESS_KEY}
       - MAILROOM_LOG_LEVEL=${MAILROOM_LOG_LEVEL}
   courier:
-    image: praekeltfoundation/courier
+    build:
+      context: .
+      dockerfile: docker/local/courier/Dockerfile
     depends_on:
-      - db
-      - redis
+      - rapidpro
     environment:
       - COURIER_DOMAIN=localhost
       - COURIER_DB=postgres://temba:temba@db/temba
@@ -86,10 +88,11 @@ services:
       - COURIER_S3_REGION=${COURIER_S3_REGION}
       - COURIER_LOG_LEVEL=${COURIER_LOG_LEVEL}
   indexer:
-    image: praekeltfoundation/rp-indexer
+    build:
+      context: .
+      dockerfile: docker/local/indexer/Dockerfile
     depends_on:
-      - db
-      - elasticsearch
+      - rapidpro
     environment:
       - INDEXER_DB=postgres://temba:temba@db/temba?sslmode=disable
       - INDEXER_ELASTIC_URL=http://elasticsearch:9200

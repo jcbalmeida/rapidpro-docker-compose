@@ -1,0 +1,9 @@
+[submodule "microservices/rp-indexer"]
+	path = microservices/rp-indexer
+	url = git@github.com:nyaruka/rp-indexer.git
+[submodule "microservices/mailroom"]
+	path = microservices/mailroom
+	url = git@github.com:nyaruka/mailroom.git
+[submodule "microservices/courier"]
+	path = microservices/courier
+	url = git@github.com:nyaruka/courier.git
