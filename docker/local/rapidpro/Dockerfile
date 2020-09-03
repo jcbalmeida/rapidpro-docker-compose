@@ -1,30 +1,25 @@
 FROM python:3
 ENV PYTHONUNBUFFERED 1
 
+WORKDIR /build
+
 # apt dependencies
 RUN apt-get update \
-    && apt-get install -y gdal-bin nodejs npm \
+    && apt-get install -y --upgrade gdal-bin nodejs npm gettext \
     && rm -rf /var/lib/apt/lists/*
 
 # pip requirements
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
+COPY src/rapidpro/pip-freeze.txt ./requirements.txt
+RUN pip install -r requirements.txt && pip install django-environ
 
 # npm
-WORKDIR /app
-COPY package.json .
-RUN npm install && \
-    npm install -g less coffeescript
+RUN npm install -g less coffeescript
 
-# COPY scripts/install_geolibs /install_geolibs
-# RUN sed -i 's/\r//' /install_geolibs
-# RUN chmod +x /install_geolibs && /install_geolibs
-
-COPY scripts/entrypoint /entrypoint
+COPY docker/local/rapidpro/scripts/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY scripts/start /start
+COPY docker/local/rapidpro/scripts/start /start
 RUN sed -i 's/\r//' /start
 RUN chmod +x /start
 

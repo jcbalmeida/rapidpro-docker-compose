@@ -9,7 +9,7 @@ RUN apk update \
 RUN addgroup -S golang \
   && adduser -S -G golang golang
 
-COPY microservices/courier .
+COPY src/courier .
 
 RUN go install -v ./cmd/...
 RUN chown -R golang /app

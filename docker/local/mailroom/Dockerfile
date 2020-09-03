@@ -9,7 +9,7 @@ RUN apk update \
 RUN addgroup -S golang \
   && adduser -S -G golang golang
 
-COPY  microservices/mailroom .
+COPY  src/mailroom .
 
 RUN curl https://codeload.github.com/nyaruka/goflow/tar.gz/$(grep goflow go.mod | cut -d" " -f2) | tar --wildcards --strip=1 -zx "*/docs/*"
 RUN cp docs/en-us/completion.json docs/completion.json && cp docs/en-us/functions.json docs/functions.json

@@ -1,9 +1,12 @@
-[submodule "microservices/rp-indexer"]
-	path = microservices/rp-indexer
-	url = git@github.com:nyaruka/rp-indexer.git
-[submodule "microservices/mailroom"]
-	path = microservices/mailroom
-	url = git@github.com:nyaruka/mailroom.git
-[submodule "microservices/courier"]
-	path = microservices/courier
+[submodule "src/courier"]
+	path = src/courier
 	url = git@github.com:nyaruka/courier.git
+[submodule "src/mailroom"]
+	path = src/mailroom
+	url = git@github.com:nyaruka/mailroom.git
+[submodule "src/rp-indexer"]
+	path = src/rp-indexer
+	url = git@github.com:nyaruka/rp-indexer.git
+[submodule "src/rapidpro"]
+	path = src/rapidpro
+	url = git@github.com:nyaruka/rapidpro.git

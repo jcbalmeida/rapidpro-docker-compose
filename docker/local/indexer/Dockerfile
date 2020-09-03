@@ -9,7 +9,7 @@ RUN apk update \
 RUN addgroup -S golang \
   && adduser -S -G golang golang
 
-COPY microservices/rp-indexer .
+COPY src/rp-indexer .
 
 RUN go install -v ./cmd/...
 RUN chown -R golang /app
