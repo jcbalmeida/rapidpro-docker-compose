@@ -8,7 +8,7 @@ RUN apt-get update \
 
 # pip requirements
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && pip install django-environ
 
 # npm
 WORKDIR /app
