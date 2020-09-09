@@ -12,13 +12,7 @@ RUN pip install -r requirements.txt && pip install django-environ
 
 # npm
 WORKDIR /app
-COPY package.json .
-RUN npm install && \
-    npm install -g less coffeescript
-
-# COPY scripts/install_geolibs /install_geolibs
-# RUN sed -i 's/\r//' /install_geolibs
-# RUN chmod +x /install_geolibs && /install_geolibs
+RUN npm install -g less coffeescript
 
 COPY scripts/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint
