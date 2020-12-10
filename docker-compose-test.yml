@@ -1,0 +1,84 @@
+version: "3.8"
+volumes:
+  pgdata: {}
+services:
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/local/db/Dockerfile
+    restart: on-failure
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=temba
+      - POSTGRES_PASSWORD=temba
+      - POSTGRES_DB=temba
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:alpine
+    ports: 
+      - "6379:6379"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.9
+    environment:
+      - bootstrap.memory_lock=true
+      - ES_HEAP_SIZE=512m
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+  mailroom:
+    build:
+      context: .
+      dockerfile: docker/local/mailroom/Dockerfile
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - MAILROOM_ADDRESS=${MAILROOM_ADDRESS:-0.0.0.0}
+      - MAILROOM_DB=postgres://temba:temba@db/temba?sslmode=disable
+      - MAILROOM_REDIS=redis://redis:6379/15
+      - MAILROOM_ELASTIC=http://elasticsearch:9200
+      - MAILROOM_SMTP_SERVER=${MAILROOM_SMTP_SERVER:-smtp://user%40password@server:port/?from=foo%40gmail.com}
+      - MAILROOM_DOMAIN=rapidpro
+
+      - MAILROOM_ATTACHMENT_DOMAIN=rapidpro
+      - MAILROOM_AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-changeme}
+      - MAILROOM_AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-changeme}
+      - MAILROOM_S3_REGION=${AWS_S3_REGION_NAME:-changeme}
+      - MAILROOM_S3_MEDIA_BUCKET=${MAILROOM_S3_MEDIA_BUCKET}
+      - MAILROOM_S3_MEDIA_PREFIX=${MAILROOM_S3_MEDIA_PREFIX}
+      - MAILROOM_AWS_ACCESS_KEY_ID=${MAILROOM_AWS_ACCESS_KEY_ID}
+      - MAILROOM_AWS_SECRET_ACCESS_KEY=${MAILROOM_AWS_SECRET_ACCESS_KEY}
+      - MAILROOM_LOG_LEVEL=${MAILROOM_LOG_LEVEL}
+    ports:
+      - "8090:8090"
+  courier:
+    build:
+      context: .
+      dockerfile: docker/local/courier/Dockerfile
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - COURIER_DOMAIN=localhost
+      - COURIER_DB=postgres://temba:temba@db/temba
+      - COURIER_REDIS=redis://redis:6379/13
+      - COURIER_AWS_ACCESS_KEY_ID=${COURIER_AWS_ACCESS_KEY_ID}
+      - COURIER_AWS_SECRET_ACCESS_KEY=${COURIER_AWS_SECRET_ACCESS_KEY}
+      - COURIER_S3_REGION=${COURIER_S3_REGION}
+      - COURIER_LOG_LEVEL=${COURIER_LOG_LEVEL}
+  indexer:
+    build:
+      context: .
+      dockerfile: docker/local/indexer/Dockerfile
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - INDEXER_DB=postgres://temba:temba@db/temba?sslmode=disable
+      - INDEXER_ELASTIC_URL=http://elasticsearch:9200
