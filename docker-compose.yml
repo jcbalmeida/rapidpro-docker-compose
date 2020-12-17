@@ -41,6 +41,11 @@ services:
       - POSTGRES_PASSWORD=temba
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=10
+      - MAILROOM_URL=http://mailroom:8090
+      - DATABASE_URL=postgis://temba:temba@db:5432/temba
   nginx:
     build:
       context: .
