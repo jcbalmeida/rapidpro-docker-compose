@@ -1,6 +1,6 @@
 version: "3.8"
 volumes:
-  pgdata: {}
+  test-pgdata: {}
 services:
   db:
     build:
@@ -8,7 +8,7 @@ services:
       dockerfile: ./docker/local/db/Dockerfile
     restart: on-failure
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - test-pgdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=temba
       - POSTGRES_PASSWORD=temba
