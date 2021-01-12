@@ -10,3 +10,6 @@
 [submodule "src/rapidpro"]
 	path = src/rapidpro
 	url = git@github.com:nyaruka/rapidpro.git
+[submodule "src/rapidpro-apps"]
+	path = src/rapidpro-apps
+	url = git@github.com:Ilhasoft/rapidpro-apps.git
