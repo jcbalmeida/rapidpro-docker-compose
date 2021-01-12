@@ -28,9 +28,8 @@ services:
       dockerfile: ./docker/local/rapidpro/Dockerfile
     command: /start
     volumes:
-      - type: bind
-        source: ./src/rapidpro
-        target: /app
+      - ./src/rapidpro:/app
+      - ./src/rapidpro-apps:/app/apps
     depends_on:
       - db
       - redis
