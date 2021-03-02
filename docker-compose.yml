@@ -23,7 +23,7 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
       - discovery.type=single-node
   rapidpro:
-    build: 
+    build:
       context: .
       dockerfile: ./docker/local/rapidpro/Dockerfile
     command: /start
@@ -87,22 +87,12 @@ services:
     depends_on:
       - rapidpro
     environment:
-      - MAILROOM_ADDRESS=${MAILROOM_ADDRESS:-0.0.0.0}
+      - MAILROOM_ADDRESS=0.0.0.0
       - MAILROOM_DB=postgres://temba:temba@db/temba?sslmode=disable
       - MAILROOM_REDIS=redis://redis:6379/15
       - MAILROOM_ELASTIC=http://elasticsearch:9200
-      - MAILROOM_SMTP_SERVER=${MAILROOM_SMTP_SERVER:-smtp://user%40password@server:port/?from=foo%40gmail.com}
       - MAILROOM_DOMAIN=rapidpro
-
       - MAILROOM_ATTACHMENT_DOMAIN=rapidpro
-      - MAILROOM_AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-changeme}
-      - MAILROOM_AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-changeme}
-      - MAILROOM_S3_REGION=${AWS_S3_REGION_NAME:-changeme}
-      - MAILROOM_S3_MEDIA_BUCKET=${MAILROOM_S3_MEDIA_BUCKET}
-      - MAILROOM_S3_MEDIA_PREFIX=${MAILROOM_S3_MEDIA_PREFIX}
-      - MAILROOM_AWS_ACCESS_KEY_ID=${MAILROOM_AWS_ACCESS_KEY_ID}
-      - MAILROOM_AWS_SECRET_ACCESS_KEY=${MAILROOM_AWS_SECRET_ACCESS_KEY}
-      - MAILROOM_LOG_LEVEL=${MAILROOM_LOG_LEVEL}
   courier:
     build:
       context: .
@@ -113,10 +103,6 @@ services:
       - COURIER_DOMAIN=localhost
       - COURIER_DB=postgres://temba:temba@db/temba
       - COURIER_REDIS=redis://redis:6379/13
-      - COURIER_AWS_ACCESS_KEY_ID=${COURIER_AWS_ACCESS_KEY_ID}
-      - COURIER_AWS_SECRET_ACCESS_KEY=${COURIER_AWS_SECRET_ACCESS_KEY}
-      - COURIER_S3_REGION=${COURIER_S3_REGION}
-      - COURIER_LOG_LEVEL=${COURIER_LOG_LEVEL}
   indexer:
     build:
       context: .
