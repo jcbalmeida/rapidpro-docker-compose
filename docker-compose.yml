@@ -29,7 +29,7 @@ services:
     command: /start
     volumes:
       - ./src/rapidpro:/app
-      - ./src/rapidpro-apps:/app/apps
+      - ./src/rapidpro-apps/weni:/app/weni
     depends_on:
       - db
       - redis
