@@ -45,6 +45,31 @@ services:
       - REDIS_DB=10
       - MAILROOM_URL=http://mailroom:8090
       - DATABASE_URL=postgis://temba:temba@db:5432/temba
+  grpc:
+    build:
+      context: .
+      dockerfile: ./docker/local/rapidpro/Dockerfile
+    command: python manage.py grpcrunserver --dev
+    volumes:
+      - ./src/rapidpro:/app
+      - ./src/rapidpro-apps/weni:/app/weni
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - POSTGRES_DB=temba
+      - POSTGRES_USER=temba
+      - POSTGRES_PASSWORD=temba
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=10
+      - MAILROOM_URL=http://mailroom:8090
+      - DATABASE_URL=postgis://temba:temba@db:5432/temba
+    ports:
+      - "50051:50051"
   nginx:
     build:
       context: .
