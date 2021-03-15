@@ -15,11 +15,14 @@ RUN apt-get install -y nodejs
 # pip requirements
 COPY src/rapidpro/pip-freeze.txt ./requirements.txt
 RUN pip install -r requirements.txt && \
+    # grpc requirements (we don't install rapidpro-apps locally)
     pip install \
-        djangogrpcframework \
         grpcio \
         grpcio-tools \
+        djangogrpcframework \
         # dev dependencies
+        # jedi 0.18 has a bug with ipython
+        jedi==0.17.2 ipython \
         django-environ ipdb django-extensions 
 
 
