@@ -16,3 +16,6 @@
 [submodule "src/protos"]
 	path = src/protos
 	url = git@github.com:Ilhasoft/weni-protobuffers.git
+[submodule "src/weni-rp-templates"]
+	path = src/weni-rp-templates
+	url = git@github.com:Ilhasoft/weni-rp-templates.git
