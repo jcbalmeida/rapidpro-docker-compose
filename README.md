@@ -1,6 +1,14 @@
 # rapidpro-docker-compose
 
-## Running step-by-step
+1. Clone repository (obs.: use --recursive parameter to clone all repositories at once)
+
+git clone --recursive git@github.com:jcbalmeida/rapidpro-docker-compose.git
+
+If you have already coned without --recursive param (zippy), you can fetch the source repos with:
+
+git submodule update --init --recursive
+
+## Step-by-step
 1. Clone recursively this repo:
     - > $ git clone --recursive git@github.com:jcbalmeida/rapidpro-docker-compose.git
     - > $ cd rapidpro-docker-compose
