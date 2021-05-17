@@ -1,6 +1,14 @@
 # rapidpro-docker-compose
 
-## Running step-by-step
+1. Clone repository (obs.: use --recursive parameter to clone all repositories at once)
+
+git clone --recursive git@github.com:jcbalmeida/rapidpro-docker-compose.git
+
+If you have already coned without --recursive param (zippy), you can fetch the source repos with:
+
+git submodule update --init --recursive
+
+## Step-by-step
 1. Clone recursively this repo:
     - > $ git clone --recursive git@github.com:jcbalmeida/rapidpro-docker-compose.git
     - > $ cd rapidpro-docker-compose
@@ -24,3 +32,14 @@
                     # [...]
                 }
             ```
+
+6. Configure Mailroom Docs
+    - > $ cd src/mailroom
+    - > $ GOFLOW_VERSION=$(grep goflow go.mod | cut -d" " -f2 | cut -c2-)
+    - > $ curl https://codeload.github.com/nyaruka/goflow/tar.gz/v$GOFLOW_VERSION --output v${GOFLOW_VERSION}
+    - > $ tar xvzf v${GOFLOW_VERSION}
+    - > $ mkdir docs
+    - > $ cd goflow-${GOFLOW_VERSION}
+    - > $ go run cmd/docgen/main.go
+    - > $ cd ../
+    - > $ cp goflow-${GOFLOW_VERSION}/docs/en-us/*.* docs/
