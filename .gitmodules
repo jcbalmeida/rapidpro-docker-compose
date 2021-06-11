@@ -19,3 +19,9 @@
 [submodule "src/weni-rp-templates"]
 	path = src/weni-rp-templates
 	url = git@github.com:Ilhasoft/weni-rp-templates.git
+[submodule "src/push-branding"]
+	path = src/push-branding
+	url = git@github.com:push-platform/push-branding.git
+[submodule "src/rp-archiver"]
+	path = src/rp-archiver
+	url = git@github.com:nyaruka/rp-archiver.git
