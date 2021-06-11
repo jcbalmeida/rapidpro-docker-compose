@@ -46,6 +46,22 @@ services:
       - REDIS_DB=10
       - MAILROOM_URL=http://mailroom:8090
       - DATABASE_URL=postgis://temba:temba@db:5432/temba
+      - DATABASE_USE_SSL=false
+      - WENI_DOMAIN=lvh.me
+      - OIDC_OP_AUTHORIZATION_ENDPOINT=https://accounts.weni.ai/auth/realms/weni-develop/protocol/openid-connect/auth
+      - OIDC_OP_JWKS_ENDPOINT=https://accounts.weni.ai/auth/realms/weni-develop/protocol/openid-connect/certs
+      - OIDC_OP_TOKEN_ENDPOINT=https://accounts.weni.ai/auth/realms/weni-develop/protocol/openid-connect/token
+      - OIDC_OP_USER_ENDPOINT=https://accounts.weni.ai/auth/realms/weni-develop/protocol/openid-connect/userinfo
+      - OIDC_RP_CLIENT_ID=push-backend
+      - OIDC_RP_CLIENT_SECRET=4d124446-99a0-4105-945d-6b32c3c7dcb5
+      - OIDC_RP_SIGN_ALGO=RS256
+      - OIDC_SERVER_URL=https://accounts.weni.ai
+      - ANNOUNCEMENT_LEFT=O Push agora é Weni Fluxos
+      - ANNOUNCEMENT_RIGHT=Novo módulo que estará disponível na nossa plataforma unificada em breve.
+      - ANNOUNCEMENT_LINK=https://weni.ai/blog/modularizacao-plataformas/
+      - ANNOUNCEMENT_BUTTON=Saiba mais
+      - HOTJAR_ID=2221595
+      - SECRET_KEY_CHECK_LEGACY_USER=123
   grpc:
     build:
       context: .
