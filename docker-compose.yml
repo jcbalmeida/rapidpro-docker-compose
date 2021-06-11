@@ -30,6 +30,7 @@ services:
     volumes:
       - ./src/rapidpro:/app
       - ./src/rapidpro-apps/weni:/app/weni
+      - ./src/push-branding/push:/app/static/brands/push
     depends_on:
       - db
       - redis
